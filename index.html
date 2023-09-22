@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>YouTube Video Link Converter</title>
+    <style>
+        /* Body styles */
+        body {
+            background-image: url('desktop-background.jpeg'); /* Desktop background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 80px;
+            border-radius: 10px;
+            max-width: 400px;
+            width: 100%;
+            margin-top: -100px; /* Adjust the top margin to move content up */
+            opacity: 55%;
+        }
+
+        /* Input field styles */
+        #youtubeLink {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Button styles */
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Output field styles */
+        #customURL {
+            width: 100%;
+            height: 100px;
+            resize: none;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        /* Copy button styles */
+        #copyButton {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            opacity: 100%;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 768px) {
+            body {
+                background-image: url('mobile-background.jpeg'); /* Mobile background image */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>YouTube Video Link Converter</h1>
+        <p>Enter a YouTube video link:</p>
+        <input type="text" id="youtubeLink" placeholder="https://www.youtube.com/watch?v=VIDEO_ID">
+        <button onclick="convertToCustomURL()">Convert</button>
+
+        <p>Custom URL:</p>
+        <textarea id="customURL" readonly></textarea>
+
+        <!-- Copy button -->
+        <button id="copyButton" onclick="copyCustomURL()">Copy</button>
+    </div>
+
+    <script>
+        function convertToCustomURL() {
+            var youtubeLink = document.getElementById("youtubeLink").value;
+
+            // Check if the input is a valid YouTube link
+            if (isValidYouTubeLink(youtubeLink)) {
+                // Create a custom URL with the YouTube video as a parameter
+                var customURL = "https://example.com/otherpage.html?videoUrl=" + encodeURIComponent(youtubeLink);
+
+                // Display the custom URL in the output field
+                document.getElementById("customURL").value = customURL;
+            } else {
+                alert("Please enter a valid YouTube video link.");
+            }
+        }
+
+        function copyCustomURL() {
+            // Select the custom URL text
+            var customURLField = document.getElementById("customURL");
+            customURLField.select();
+
+            // Copy the selected text to the clipboard
+            document.execCommand("copy");
+
+            // Deselect the text
+            customURLField.setSelectionRange(0, 0);
+
+            // Show a confirmation message
+            //alert("URL copied to clipboard!");
+        }
+
+        function isValidYouTubeLink(link) {
+            // Regular expression to check if the link matches a YouTube video URL pattern
+            var youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/;
+            return youtubeRegex.test(link);
+        }
+    </script>
+</body>
+
+</html>
